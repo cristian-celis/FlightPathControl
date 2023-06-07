@@ -6,9 +6,9 @@ import co.edu.uptc.views.ManagerView;
 import javax.swing.*;
 
 public class System {
-    private ConnectionWithPanels.Presenter presenter;
-    private ConnectionWithPanels.Model model;
-    private ConnectionWithPanels.View view;
+    private final ConnectionWithPanels.Presenter presenter;
+    private final ConnectionWithPanels.Model model;
+    private final ConnectionWithPanels.View view;
 
     public System(){
         presenter = new Presenter();

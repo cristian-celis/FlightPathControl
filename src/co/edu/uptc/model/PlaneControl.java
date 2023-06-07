@@ -30,7 +30,7 @@ public class PlaneControl extends Thread {
         try {
             while (managerGeneral.isRunning && !checkCrash() && !planeArrived) {
                 if (managerGeneral.isPause){
-                    sleep(500);
+                    sleep(1000);
                 }else {
                     arriveToTrack();
                     move();

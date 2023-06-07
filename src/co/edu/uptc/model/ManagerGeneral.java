@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class ManagerGeneral implements ConnectionWithPanels.Model {
-    private ArrayList<Plane> planes;
+    private final ArrayList<Plane> planes;
     private ConnectionWithPanels.Presenter presenter;
     private final ManagerRoutes managerRoutes;
     private Timer timer;
@@ -107,7 +107,7 @@ public class ManagerGeneral implements ConnectionWithPanels.Model {
             }
             positionPlane++;
         }
-        return -1;
+        throw new ArrayIndexOutOfBoundsException();
     }
 
     private void createAirPlanes(int idPlane) {

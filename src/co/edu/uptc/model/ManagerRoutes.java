@@ -8,62 +8,54 @@ import java.util.Random;
 
 public class ManagerRoutes {
     private ManagerGeneral managerGeneral;
+    private int widthPanel = 1450;
+    private int heightPanel = 830;
 
     public ManagerRoutes(ManagerGeneral managerGeneral){
         this.managerGeneral = managerGeneral;
     }
     private int[] initialPoint() {
-        int[] coordinates = new int[2];
-        int[] possiblePoints;
-        int x , y;
-        boolean coorFound = false;
-        while(!coorFound){
-            possiblePoints = searchInitialPoints();
-            x = possiblePoints[0];
-            y = possiblePoints[1];
-            if (checkCoordinates(x, y)){
-                coordinates[0] = x;
-                coordinates[1] = y;
-                coorFound = true;
-            }
-        }
-        return coordinates;
-    }
-
-    private int[] searchInitialPoints(){
-        int width = 1450;
-        int height = 830;
-        Random random = new Random();
         int[] possiblePoints = new int[2];
-        int lado = random.nextInt(4);
-        switch (lado) {
-            case 0 -> {
-                possiblePoints[1] = random.nextInt(height);
-            }
-            case 1 -> {
-                possiblePoints[0] = random.nextInt(width);
-            }
-            case 2 -> {
-                possiblePoints[0] = width;
-                possiblePoints[1] = random.nextInt(height);
-            }
-            case 3 -> {
-                possiblePoints[1] = height;
-                possiblePoints[0] = random.nextInt(width);
+        boolean pointsFound = false;
+        while(!pointsFound){
+            possiblePoints = searchInitialPoints();
+            if (checkCoordinates(possiblePoints[0], possiblePoints[1])){
+                pointsFound = true;
             }
         }
         return possiblePoints;
     }
 
-    private boolean checkCoordinates(int x, int y){
-        boolean isValid = true;
-        for (Plane plane : managerGeneral.getPlanes()) {
-            if (distanceTo(plane.getRoute().get(0), x, y) < 150) {
-                isValid = false;
-                return  isValid;
+    private int[] searchInitialPoints(){
+        Random random = new Random();
+        int[] randomPoints = new int[2];
+        int side = random.nextInt(4);
+        switch (side) {
+            case 0 -> {
+                randomPoints[1] = random.nextInt(heightPanel);
+            }
+            case 1 -> {
+                randomPoints[0] = random.nextInt(widthPanel);
+            }
+            case 2 -> {
+                randomPoints[0] = widthPanel;
+                randomPoints[1] = random.nextInt(heightPanel);
+            }
+            case 3 -> {
+                randomPoints[1] = heightPanel;
+                randomPoints[0] = random.nextInt(widthPanel);
             }
         }
-        return isValid;
+        return randomPoints;
+    }
+
+    private boolean checkCoordinates(int x, int y){
+        for (Plane plane : managerGeneral.getPlanes()) {
+            if (distanceTo(plane.getRoute().get(0), x, y) < 150) {
+                return  false;
+            }
+        }
+        return true;
     }
 
     private int distanceTo(Points other, int x, int y) {
@@ -74,6 +66,7 @@ public class ManagerRoutes {
 
     public ArrayList<Points> generateInitialRoute() {
         ArrayList<Points> initialRoute = new ArrayList<>();
+
         int centralPointX = 800;
         int centralPointY = 460;
 
